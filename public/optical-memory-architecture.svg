@@ -1,0 +1,90 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Optical memory architecture illustration</title>
+  <desc id="desc">An abstract cyan and blue diagram of an optical memory array and light paths.</desc>
+  <defs>
+    <linearGradient id="background" x1="64" y1="64" x2="960" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#081328"/>
+      <stop offset="0.55" stop-color="#0B2240"/>
+      <stop offset="1" stop-color="#050914"/>
+    </linearGradient>
+    <linearGradient id="lightPath" x1="140" y1="150" x2="872" y2="832" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3CE0E6"/>
+      <stop offset="0.5" stop-color="#72F6FA"/>
+      <stop offset="1" stop-color="#2B62D9"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0" cy="0" r="1" gradientTransform="translate(512 512) rotate(90) scale(176)">
+      <stop stop-color="#D8FFFF"/>
+      <stop offset="0.18" stop-color="#61F0F3"/>
+      <stop offset="0.6" stop-color="#1F75D7" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#0B1233" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="smallGlow" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#8DDDE8" stroke-opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="1024" height="1024" rx="56" fill="url(#background)"/>
+  <rect x="42" y="42" width="940" height="940" rx="42" stroke="#72F6FA" stroke-opacity="0.14" stroke-width="2"/>
+  <rect width="1024" height="1024" rx="56" fill="url(#grid)"/>
+
+  <g opacity="0.54">
+    <path d="M82 300H277L370 393" stroke="#3CE0E6" stroke-width="3"/>
+    <path d="M82 412H251L375 475" stroke="#3CE0E6" stroke-width="3"/>
+    <path d="M82 620H294L385 560" stroke="#2B62D9" stroke-width="3"/>
+    <path d="M82 735H275L390 641" stroke="#2B62D9" stroke-width="3"/>
+    <path d="M942 290H747L649 390" stroke="#2B62D9" stroke-width="3"/>
+    <path d="M942 410H773L650 480" stroke="#3CE0E6" stroke-width="3"/>
+    <path d="M942 622H730L644 565" stroke="#3CE0E6" stroke-width="3"/>
+    <path d="M942 737H752L635 641" stroke="#2B62D9" stroke-width="3"/>
+  </g>
+
+  <g fill="#3CE0E6" filter="url(#smallGlow)">
+    <circle cx="82" cy="300" r="7"/><circle cx="82" cy="412" r="7"/>
+    <circle cx="82" cy="620" r="7"/><circle cx="82" cy="735" r="7"/>
+    <circle cx="942" cy="290" r="7"/><circle cx="942" cy="410" r="7"/>
+    <circle cx="942" cy="622" r="7"/><circle cx="942" cy="737" r="7"/>
+  </g>
+
+  <g transform="rotate(-16 512 512)">
+    <rect x="314" y="314" width="396" height="396" rx="36" fill="#09182E" stroke="#5DECF0" stroke-opacity="0.42" stroke-width="3"/>
+    <rect x="352" y="352" width="320" height="320" rx="25" fill="#0C2746" stroke="#3CE0E6" stroke-opacity="0.38" stroke-width="2"/>
+    <g stroke="#72F6FA" stroke-opacity="0.34" stroke-width="2">
+      <path d="M416 352V672M480 352V672M544 352V672M608 352V672"/>
+      <path d="M352 416H672M352 480H672M352 544H672M352 608H672"/>
+    </g>
+    <rect x="423" y="423" width="178" height="178" rx="18" fill="#0A1631" stroke="url(#lightPath)" stroke-width="4"/>
+    <path d="M445 468H579M445 512H579M445 556H579M468 445V579M512 445V579M556 445V579" stroke="#3CE0E6" stroke-opacity="0.48" stroke-width="3"/>
+  </g>
+
+  <circle cx="512" cy="512" r="212" fill="url(#core)"/>
+  <g filter="url(#glow)">
+    <path d="M156 185L511 512L855 832" stroke="url(#lightPath)" stroke-width="7" stroke-linecap="round" stroke-opacity="0.85"/>
+    <path d="M195 870L511 512L822 146" stroke="url(#lightPath)" stroke-width="7" stroke-linecap="round" stroke-opacity="0.75"/>
+    <path d="M92 511H932" stroke="url(#lightPath)" stroke-width="5" stroke-linecap="round" stroke-opacity="0.68"/>
+  </g>
+  <g fill="#E1FFFF" filter="url(#smallGlow)">
+    <circle cx="512" cy="512" r="17"/>
+    <circle cx="156" cy="185" r="8"/><circle cx="855" cy="832" r="8"/>
+    <circle cx="195" cy="870" r="8"/><circle cx="822" cy="146" r="8"/>
+    <circle cx="92" cy="511" r="8"/><circle cx="932" cy="511" r="8"/>
+  </g>
+  <g fill="#91FAFC" fill-opacity="0.82">
+    <circle cx="245" cy="256" r="3"/><circle cx="328" cy="195" r="3"/><circle cx="706" cy="229" r="3"/>
+    <circle cx="811" cy="342" r="3"/><circle cx="194" cy="729" r="3"/><circle cx="772" cy="754" r="3"/>
+  </g>
+  <text x="96" y="126" fill="#B8FDFE" fill-opacity="0.88" font-family="Arial, sans-serif" font-size="23" letter-spacing="6">OPTICAL MEMORY ARRAY</text>
+  <text x="96" y="157" fill="#8AA8C2" fill-opacity="0.82" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">ARCHITECTURE STUDY</text>
+</svg>
