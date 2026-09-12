@@ -1,0 +1,54 @@
+# High security and robust robots.txt for texabyte.co.in
+
+# ------------------------------------------------------------------------------
+# 1. Rules for all web crawlers
+# ------------------------------------------------------------------------------
+User-agent: *
+Allow: /
+
+# Prevent indexing of potentially sensitive administrative/internal directories
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /config/
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /auth/
+Disallow: /user/
+Disallow: /tmp/
+Disallow: /src/
+Disallow: /dist/
+
+# Prevent indexing of specific sensitive file types
+Disallow: /*.json$
+Disallow: /*.env$
+Disallow: /*.log$
+Disallow: /*.sql$
+Disallow: /*.sh$
+Disallow: /*.bak$
+
+# ------------------------------------------------------------------------------
+# 2. Prevent Common AI Scrapers (Optional but recommended for IP protection)
+# ------------------------------------------------------------------------------
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# ------------------------------------------------------------------------------
+# 3. Sitemap declaration
+# ------------------------------------------------------------------------------
+Sitemap: https://texabyte.co.in/sitemap.xml

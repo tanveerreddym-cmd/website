@@ -28,16 +28,77 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "TEXABYTE (OPC) Private Limited",
-      "alternateName": "TEXABYTE",
-      "url": "https://texabyte.co.in",
-      "sameAs": ["https://www.linkedin.com/in/tanveer-reddy-m-6b2653381"],
-      "foundingDate": "2025-09",
-      "founder": {"@type": "Person", "name": "Tanveer Reddy M", "sameAs": "https://www.linkedin.com/in/tanveer-reddy-m-6b2653381"},
-      "employee": {"@type": "Person", "name": "Dr. Hamad Syed", "jobTitle": "Chief Technology Officer & Head of R&D", "sameAs": "https://www.linkedin.com/in/dr-hamad-syed-b035aa62"},
-      "address": {"@type": "PostalAddress", "addressLocality": "Tirupati", "addressRegion": "Andhra Pradesh", "addressCountry": "IN"},
-      "description": "Deep-tech company advancing optophotonics and interconnect-based memory architectures."
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://texabyte.co.in/#organization",
+          "name": "TEXABYTE (OPC) Private Limited",
+          "alternateName": "TEXABYTE",
+          "url": "https://texabyte.co.in",
+          "logo": "https://texabyte.co.in/logo-t-blue.png",
+          "sameAs": ["https://www.linkedin.com/in/tanveer-reddy-m-6b2653381"],
+          "foundingDate": "2024",
+          "founder": {
+            "@type": "Person",
+            "name": "Tanveer Reddy M",
+            "jobTitle": "Founder & Director",
+            "sameAs": "https://www.linkedin.com/in/tanveer-reddy-m-6b2653381"
+          },
+          "employee": {
+            "@type": "Person",
+            "name": "Dr. Hamad Syed",
+            "jobTitle": "Chief Technology Officer & Head of R&D",
+            "sameAs": "https://www.linkedin.com/in/dr-hamad-syed-b035aa62"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Tirupati",
+            "addressRegion": "Andhra Pradesh",
+            "addressCountry": "IN"
+          },
+          "description": "TEXABYTE is an Indian deep-tech company advancing optophotonics and interconnect-based memory architectures.",
+          "knowsAbout": [
+            "Optophotonics",
+            "Interconnect-based memory",
+            "Optical interconnects",
+            "Reconfigurable memory states",
+            "Deep-tech hardware",
+            "Non-volatile memory"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://texabyte.co.in/#website",
+          "url": "https://texabyte.co.in/",
+          "name": "TEXABYTE",
+          "description": "Optophotonics & Interconnect-Based Memory",
+          "publisher": {
+            "@id": "https://texabyte.co.in/#organization"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://texabyte.co.in/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is TEXABYTE?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "TEXABYTE is a deep-tech company advancing optophotonics and interconnect-based memory architectures, built from first principles in Tirupati, India."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is interconnect-based memory?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It is a memory architecture that uses light (optical interconnects) to move and address information, featuring reconfigurable memory states built to hold data reliably without continuous power."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
   </head>
