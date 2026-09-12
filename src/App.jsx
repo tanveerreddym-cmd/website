@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   AppBar,
@@ -14,6 +14,7 @@ import {
   Toolbar,
   Typography,
   useMediaQuery,
+  Skeleton,
 } from '@mui/material';
 import {
   ArrowOutward,
@@ -24,17 +25,18 @@ import {
 import { useColorMode } from './theme';
 import './index.css';
 
-import AuroraBackground from './components/AuroraBackground';
 import BlurText from './components/BlurText';
 import CountUp from './components/CountUp';
 import GradientText from './components/GradientText';
-import HeroParticles from './components/HeroParticles';
 import MagneticButton from './components/MagneticButton';
 import ScrollFloat from './components/ScrollFloat';
-import SplashCursor from './components/SplashCursor';
 import SplitText from './components/SplitText';
 import SpotlightCard from './components/SpotlightCard';
 import TiltCard from './components/TiltCard';
+
+const AuroraBackground = lazy(() => import('./components/AuroraBackground'));
+const HeroParticles = lazy(() => import('./components/HeroParticles'));
+const SplashCursor = lazy(() => import('./components/SplashCursor'));
 import {
   useActiveSection,
   useNavScroll,
@@ -470,7 +472,7 @@ function ContactForm() {
         borderColor: 'divider',
       }}
     >
-      <Typography variant="h6" sx={{ color: 'text.primary', mb: 3, fontWeight: 700 }}>
+      <Typography variant="h6" component="h3" sx={{ color: 'text.primary', mb: 3, fontWeight: 700 }}>
         Send a message
       </Typography>
       <Stack spacing={2.25}>
@@ -557,21 +559,23 @@ export default function App() {
   return (
     <>
       {supportsCursorEffect && !prefersReducedMotion && (
-        <SplashCursor
-          key={mode + '-splash-cursor'}
-          SIM_RESOLUTION={96}
-          DYE_RESOLUTION={1024}
-          DENSITY_DISSIPATION={3}
-          VELOCITY_DISSIPATION={1.5}
-          PRESSURE={0.12}
-          PRESSURE_ITERATIONS={18}
-          CURL={3}
-          SPLAT_RADIUS={0.16}
-          SPLAT_FORCE={4200}
-          TRANSPARENT
-          RAINBOW_MODE={false}
-          COLOR={mode === 'dark' ? '#3CE0E6' : '#2B62D9'}
-        />
+        <Suspense fallback={null}>
+          <SplashCursor
+            key={mode + '-splash-cursor'}
+            SIM_RESOLUTION={96}
+            DYE_RESOLUTION={1024}
+            DENSITY_DISSIPATION={3}
+            VELOCITY_DISSIPATION={1.5}
+            PRESSURE={0.12}
+            PRESSURE_ITERATIONS={18}
+            CURL={3}
+            SPLAT_RADIUS={0.16}
+            SPLAT_FORCE={4200}
+            TRANSPARENT
+            RAINBOW_MODE={false}
+            COLOR={mode === 'dark' ? '#3CE0E6' : '#2B62D9'}
+          />
+        </Suspense>
       )}
       <Preloader done={loaded} />
 
@@ -617,6 +621,8 @@ export default function App() {
               component="img"
               src={logoSrc}
               alt="TEXABYTE"
+              width={158}
+              height={26}
               sx={{
                 height: { xs: scrolled ? 20 : 23, sm: logoHeight },
                 width: 'auto',
@@ -794,13 +800,15 @@ export default function App() {
         }}
       >
         <Box sx={{ position: 'absolute', inset: 0, zIndex: 0, opacity: mode === 'dark' ? 0.95 : 0.72 }}>
-          <AuroraBackground
-            colorStops={mode === 'dark' ? ['#3CE0E6', '#2B62D9', '#0B1233'] : ['#A9F4F6', '#7FA9F1', '#EAF1FC']}
-            amplitude={1.28}
-            blend={0.64}
-            speed={0.92}
-            lightMode={mode === 'light'}
-          />
+          <Suspense fallback={<Skeleton variant="rectangular" width="100%" height="100%" animation="wave" sx={{ bgcolor: mode === 'dark' ? '#0B1233' : '#EAF1FC' }} />}>
+            <AuroraBackground
+              colorStops={mode === 'dark' ? ['#3CE0E6', '#2B62D9', '#0B1233'] : ['#A9F4F6', '#7FA9F1', '#EAF1FC']}
+              amplitude={1.28}
+              blend={0.64}
+              speed={0.92}
+              lightMode={mode === 'light'}
+            />
+          </Suspense>
         </Box>
         {!prefersReducedMotion && (
           <Box
@@ -814,14 +822,16 @@ export default function App() {
               mixBlendMode: mode === 'dark' ? 'screen' : 'normal',
             }}
           >
-            <HeroParticles
-              particleCount={220}
-              particleSpread={11}
-              speed={0.12}
-              particleBaseSize={105}
-              sizeRandomness={1.25}
-              particleColors={HERO_PARTICLE_COLORS[mode]}
-            />
+            <Suspense fallback={null}>
+              <HeroParticles
+                particleCount={220}
+                particleSpread={11}
+                speed={0.12}
+                particleBaseSize={105}
+                sizeRandomness={1.25}
+                particleColors={HERO_PARTICLE_COLORS[mode]}
+              />
+            </Suspense>
           </Box>
         )}
         <Box
@@ -870,7 +880,7 @@ export default function App() {
                 >
                   <SplitText text="India imports 100% of its memory technology. We’re building the exception." />
                 </Typography>
-                <Typography variant="h6" sx={{ color: 'text.secondary', mb: 3.5, fontWeight: 400, lineHeight: 1.6, maxWidth: 680 }}>
+                <Typography variant="h6" component="h2" sx={{ color: 'text.secondary', mb: 3.5, fontWeight: 400, lineHeight: 1.6, maxWidth: 680 }}>
                   <BlurText text="TEXABYTE is an Indian deep-tech company advancing optophotonics and interconnect-based memory — engineered from first principles, from a research bench in Tirupati, for the world’s memory infrastructure." />
                 </Typography>
                 <Box
@@ -953,7 +963,10 @@ export default function App() {
                       component="img"
                       src="/optophotonics_hero_1789130810825.jpg"
                       alt="Concept illustration of optophotonic memory hardware"
-                      sx={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }}
+                      width={600}
+                      height={600}
+                      fetchpriority="high"
+                      sx={{ width: '100%', height: 'auto', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }}
                     />
                   </SpotlightCard>
                 </TiltCard>
@@ -989,7 +1002,7 @@ export default function App() {
             <Grid size={{ xs: 12, md: 5 }}>
               <ScrollFloat duration={1.05}>
                 <Box sx={{ borderLeft: '3px solid', borderColor: 'primary.main', pl: { xs: 2.5, md: 4 }, py: 1 }}>
-                  <Typography variant="h5" sx={{ fontStyle: 'italic', fontWeight: 500, color: 'text.primary', lineHeight: 1.55 }}>
+                  <Typography variant="h5" component="h3" sx={{ fontStyle: 'italic', fontWeight: 500, color: 'text.primary', lineHeight: 1.55 }}>
                     <GradientText colors={['#3CE0E6', '#2B62D9', '#3CE0E6']} speed={5}>
                       “I want my people to be known for what they’re capable of today — not only for what they once were.”
                     </GradientText>
@@ -1032,7 +1045,7 @@ export default function App() {
                           }}
                           dangerouslySetInnerHTML={{ __html: '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">' + area.svg + '</svg>' }}
                         />
-                        <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 700, mb: 1.25 }}>
+                        <Typography variant="h6" component="h3" sx={{ color: 'text.primary', fontWeight: 700, mb: 1.25 }}>
                           {area.title}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
@@ -1104,7 +1117,7 @@ export default function App() {
                       <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.11em' }}>
                         {item.label}
                       </Typography>
-                      <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 700, lineHeight: 1.35, mt: 1.25, mb: 1.5 }}>
+                      <Typography variant="h6" component="h4" sx={{ color: 'text.primary', fontWeight: 700, lineHeight: 1.35, mt: 1.25, mb: 1.5 }}>
                         {item.value}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
@@ -1133,7 +1146,7 @@ export default function App() {
                   <ScrollFloat duration={0.8 + index * 0.1}>
                     <SpotlightCard spotlightColor={mode === 'dark' ? 'rgba(60, 224, 230, 0.19)' : 'rgba(43, 98, 217, 0.13)'}>
                       <Box sx={{ p: 3, minHeight: 210, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, color: 'text.primary' }}>
+                        <Typography variant="h6" component="h4" sx={{ fontWeight: 700, mb: 1.5, color: 'text.primary' }}>
                           {segment.title}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
@@ -1161,9 +1174,13 @@ export default function App() {
                         component="img"
                         src={image.src}
                         alt={image.alt}
+                        width={400}
+                        height={400}
+                        loading="lazy"
                         sx={{
                           display: 'block',
                           width: '100%',
+                          height: 'auto',
                           aspectRatio: '1 / 1',
                           objectFit: 'cover',
                           borderRadius: 3,
@@ -1214,7 +1231,7 @@ export default function App() {
                     <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.12em' }}>
                       {item.date}
                     </Typography>
-                    <Typography variant="h5" sx={{ color: 'text.primary', fontWeight: 700, mt: 0.25, mb: 1 }}>
+                    <Typography variant="h5" component="h3" sx={{ color: 'text.primary', fontWeight: 700, mt: 0.25, mb: 1 }}>
                       {item.title}
                     </Typography>
                     <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 720, lineHeight: 1.7 }}>
@@ -1242,7 +1259,7 @@ export default function App() {
                         <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.1em' }}>
                           {item.phase}
                         </Typography>
-                        <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 700, mt: 1.25, mb: 1.25 }}>
+                        <Typography variant="h6" component="h4" sx={{ color: 'text.primary', fontWeight: 700, mt: 1.25, mb: 1.25 }}>
                           {item.title}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
@@ -1291,7 +1308,7 @@ export default function App() {
                       >
                         {member.name.charAt(0)}
                       </Box>
-                      <Typography variant="h5" sx={{ color: 'text.primary', fontWeight: 700, mb: 0.5 }}>
+                      <Typography variant="h5" component="h3" sx={{ color: 'text.primary', fontWeight: 700, mb: 0.5 }}>
                         {member.name}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 700, mb: 2 }}>
@@ -1571,7 +1588,7 @@ export default function App() {
           <Grid container spacing={{ xs: 5, md: 4 }}>
             <Grid size={{ xs: 12, md: 4 }}>
               <Box component="a" href={getSectionPath('top')} onClick={(event) => navigateToSection('top', event)} aria-label="Back to TEXABYTE home" sx={{ display: 'inline-flex' }}>
-                <Box component="img" src={logoSrc} alt="TEXABYTE" sx={{ height: 28, width: 'auto' }} />
+                <Box component="img" src={logoSrc} alt="TEXABYTE" width={158} height={26} sx={{ height: 28, width: 'auto' }} />
               </Box>
               <Typography variant="body2" sx={{ color: 'text.secondary', maxWidth: 270, mt: 2, lineHeight: 1.7 }}>
                 Indianising data, globalising innovation.

@@ -20,7 +20,8 @@ export default function BlurText({
   const units = splitBy === 'word' ? text.split(' ') : text.split('');
 
   return (
-    <span ref={ref} className={`blur-text-root ${className}`} aria-label={text}>
+    <span ref={ref} className={`blur-text-root ${className}`}>
+      <span className="sr-only">{text}</span>
       {units.map((unit, i) => (
         <span
           key={i}

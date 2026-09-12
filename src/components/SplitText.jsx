@@ -39,7 +39,8 @@ export default function SplitText({
   let animationIndex = 0;
 
   return (
-    <span ref={ref} className={`split-text-root ${className}`} aria-label={text}>
+    <span ref={ref} className={`split-text-root ${className}`}>
+      <span className="sr-only">{text}</span>
       {splitBy === 'word'
         ? units.map((word, index) => (
           <span
