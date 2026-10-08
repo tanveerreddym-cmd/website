@@ -143,7 +143,7 @@ button {
 .preloader.done { pointer-events: none; }
 
 .preloader-logo {
-  width: 60px; height: 60px;
+  width: min(300px, 72vw); height: auto;
   animation: preloaderPulse 1.5s ease-in-out infinite;
 }
 .preloader-dots {

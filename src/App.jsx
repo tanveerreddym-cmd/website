@@ -200,6 +200,7 @@ const HERO_PARTICLE_COLORS = Object.freeze({
 const TIRUPATI_MAP = Object.freeze({
   openStreetMapUrl: 'https://www.openstreetmap.org/?mlat=13.6316&mlon=79.4232#map=13/13.6316/79.4232',
   embedUrl: 'https://www.openstreetmap.org/export/embed.html?bbox=79.3632%2C13.5916%2C79.4832%2C13.6716&layer=mapnik',
+  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Tirupati%2C%20Andhra%20Pradesh%2C%20India',
 });
 
 const mobileMenuPanelVariants = {
@@ -370,7 +371,7 @@ function Preloader({ done }) {
       <div className="preloader-curtain left" />
       <div className="preloader-curtain right" />
       <div className="preloader-content">
-        <img src="/logo-t-blue.png" alt="TEXABYTE" className="preloader-logo" />
+        <img src="/brand/texabyte-wordmark-dark.svg" alt="TEXABYTE" className="preloader-logo" />
         <div className="preloader-dots">
           <div className="preloader-dot" />
           <div className="preloader-dot" />
@@ -504,7 +505,7 @@ export default function App() {
   const { mode, toggleColorMode } = useColorMode();
   const supportsCursorEffect = useMediaQuery('(hover: hover) and (pointer: fine)', { noSsr: true });
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)', { noSsr: true });
-  const logoSrc = '/logo-texabyte-tagline.png';
+  const logoSrc = mode === 'dark' ? '/brand/texabyte-wordmark-dark.svg' : '/brand/texabyte-wordmark-light.svg';
   const logoHeight = scrolled ? 21 : 26;
 
   useEffect(() => {
@@ -621,12 +622,13 @@ export default function App() {
               component="img"
               src={logoSrc}
               alt="TEXABYTE"
-              width={158}
+              width={188}
               height={26}
               sx={{
-                height: { xs: scrolled ? 20 : 23, sm: logoHeight },
+                height: { xs: scrolled ? 19 : 21, sm: logoHeight },
                 width: 'auto',
                 maxWidth: { xs: 158, sm: 'none' },
+                objectFit: 'contain',
                 transition: 'height 220ms ease',
               }}
             />
@@ -1462,14 +1464,14 @@ export default function App() {
               </Typography>
               <Button
                 component="a"
-                href={TIRUPATI_MAP.openStreetMapUrl}
+                href={TIRUPATI_MAP.googleMapsUrl}
                 target="_blank"
                 rel="noreferrer"
                 variant="outlined"
                 endIcon={<ArrowOutward />}
                 sx={{ mt: 3, borderRadius: 99, px: 2.5 }}
               >
-                Open Tirupati map
+                Open in Google Maps
               </Button>
             </Grid>
 
@@ -1487,17 +1489,23 @@ export default function App() {
                     bgcolor: mode === 'dark' ? '#09111C' : '#DCE8F6',
                   }}
                 >
+                  {/* Static preview: the map can't be dragged, so the pin stays on Tirupati and phones scroll the page,
+                      not the map. The iframe overhangs the card so OSM's own zoom buttons and attribution bar are hidden;
+                      attribution is shown once, below. */}
                   <Box
                     component="iframe"
                     title="Tirupati, Andhra Pradesh, India city map"
                     src={TIRUPATI_MAP.embedUrl}
                     loading="lazy"
-                    referrerPolicy="no-referrer"
+                    tabIndex={-1}
+                    aria-hidden="true"
                     sx={{
                       position: 'absolute',
-                      inset: 0,
-                      width: '100%',
-                      height: '100%',
+                      top: -80,
+                      left: -80,
+                      width: 'calc(100% + 160px)',
+                      height: 'calc(100% + 160px)',
+                      pointerEvents: 'none',
                       border: 0,
                       filter: mode === 'dark' ? 'saturate(0.72) brightness(0.64) contrast(1.12)' : 'saturate(0.86) contrast(1.04)',
                     }}
@@ -1516,9 +1524,43 @@ export default function App() {
                   />
                   <AnimatedMapPin mode={mode} reduceMotion={prefersReducedMotion} />
                   <Box
+                    component="a"
+                    href={TIRUPATI_MAP.googleMapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Open Tirupati, Andhra Pradesh in Google Maps"
+                    sx={{ position: 'absolute', inset: 0, zIndex: 2, cursor: 'pointer', '&:focus-visible': { outline: '2px solid', outlineColor: 'primary.main', outlineOffset: -4 } }}
+                  />
+                  <Box
+                    aria-hidden="true"
                     sx={{
                       position: 'absolute',
                       zIndex: 3,
+                      left: { xs: 14, sm: 18 },
+                      bottom: { xs: 12, sm: 16 },
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 0.6,
+                      px: 1.1,
+                      py: 0.55,
+                      borderRadius: 99,
+                      pointerEvents: 'none',
+                      bgcolor: mode === 'dark' ? 'rgba(4,6,13,0.78)' : 'rgba(255,255,255,0.86)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid',
+                      borderColor: mode === 'dark' ? 'rgba(255,255,255,0.16)' : 'rgba(11,18,51,0.12)',
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 600, fontSize: '0.68rem' }}>
+                      Open in Google Maps
+                    </Typography>
+                    <ArrowOutward sx={{ fontSize: 13, color: 'primary.main' }} />
+                  </Box>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      zIndex: 3,
+                      pointerEvents: 'none',
                       top: { xs: 14, sm: 18 },
                       left: { xs: 14, sm: 18 },
                       display: 'inline-flex',
@@ -1588,7 +1630,7 @@ export default function App() {
           <Grid container spacing={{ xs: 5, md: 4 }}>
             <Grid size={{ xs: 12, md: 4 }}>
               <Box component="a" href={getSectionPath('top')} onClick={(event) => navigateToSection('top', event)} aria-label="Back to TEXABYTE home" sx={{ display: 'inline-flex' }}>
-                <Box component="img" src={logoSrc} alt="TEXABYTE" width={158} height={26} sx={{ height: 28, width: 'auto' }} />
+                <Box component="img" src={logoSrc} alt="TEXABYTE" width={202} height={28} sx={{ height: 28, width: 'auto' }} />
               </Box>
               <Typography variant="body2" sx={{ color: 'text.secondary', maxWidth: 270, mt: 2, lineHeight: 1.7 }}>
                 Indianising data, globalising innovation.
