@@ -909,9 +909,9 @@ export default function App() {
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 4 }} sx={{ mb: 4 }}>
                   <Box>
                     <Typography variant="h3" sx={{ color: 'primary.main', fontSize: '2rem', fontWeight: 600 }}>
-                      <CountUp end={26} duration={1500} suffix="+" />
+                      <CountUp end={26} duration={1500} />
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">Patent applications filed</Typography>
+                    <Typography variant="body2" color="text.secondary">Patent applications filed · 1 granted</Typography>
                   </Box>
                   <Box>
                     <Typography variant="h3" sx={{ color: 'primary.main', fontSize: '2rem', fontWeight: 600 }}>
